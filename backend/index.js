@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.post("/todo", (req, res) => {
     const createPayload = req.body; 
-    const parsedPayload =  =createTodoSchema.safeParse(createPayload);
+    const parsedPayload = createTodoSchema.safeParse(createPayload);
     if(!parsedPayload.success) {
          res.status(411).json({
             error: parsedPayload.error.errors,
