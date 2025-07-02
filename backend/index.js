@@ -12,7 +12,7 @@ const app = express();
 }
 */
 app.use(express.json());
-app.post("/todo", (req, res) => {
+app.post("/todo", async (req, res) => {
     const createPayload = req.body; 
     const parsedPayload = createTodoSchema.safeParse(createPayload);
     if(!parsedPayload.success) {
@@ -22,13 +22,23 @@ app.post("/todo", (req, res) => {
         });
         return;
     }
+    // put it in mongodb
+    await todo.create({
+        title: createPayload.title,
+        description: createPayload.decription,
+        // completed: createPayload.completed,
+    })
 })
 
-app.get("/todos", (req, res) => {
+app.get("/todos", async (req, res) => {
+    const todos = await todo.find({});
 
+    res.json({
+        todos
+    })
 })
 
-app.put("/completed", (req, res) => {
+app.put("/completed", async (req, res) => {
     const updatePayload = req.body;
     const parsedPayload = updateTodoSchema.safeParse(updatePayload);
     if(!parsedPayload.success) {
@@ -38,4 +48,13 @@ app.put("/completed", (req, res) => {
         })
         return;
     }
+    await todo.updateOne({
+        _id: req.body.id,
+    }, {
+        // completed: req.body.completed,
+        completed: true, // hardcoding it to true for now
+    })
+    res.json({
+        msg: "Todo marked successfully",
+    })
 })
