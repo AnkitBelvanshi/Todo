@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
     }
     mongoose url: mongodb+srv://ankit:12345@cluster0.ve1m5.mongodb.net/
 */
-mongoose.connect('mongodb+srv://ankit:12345cluster0.ve1m5.mongodb.net/')
+mongoose.connect('mongodb+srv://ankit:12345@cluster0.ve1m5.mongodb.net/ez-todo-site');
 const todoSchema = mongoose.Schema({
     title: String,
     descrption: String,
@@ -18,5 +18,5 @@ const todoSchema = mongoose.Schema({
 const todo = mongoose.model('todos', todoSchema);
 
 module.exports = {
-    todo
+    todo: todo
 }

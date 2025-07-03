@@ -1,17 +1,18 @@
 // writing the basic express boilerplate code,
 // with express.json() middleware
-const { createTodoSchema } = require('./types');
-const { updateTodoSchema } = require('./types');
-
-const express = require('express');
-const app = express();
 /* body {
     title: string,
     description: string,
-    completed: boolean;
+    completed: boolean
 }
 */
+const express = require('express');
+const { createTodoSchema, updateTodoSchema } = require('./types');
+const { todo } = require('./db');
+const app = express();
+
 app.use(express.json());
+
 app.post("/todo", async (req, res) => {
     const createPayload = req.body; 
     const parsedPayload = createTodoSchema.safeParse(createPayload);
@@ -27,6 +28,10 @@ app.post("/todo", async (req, res) => {
         title: createPayload.title,
         description: createPayload.decription,
         // completed: createPayload.completed,
+        completed: false, // hardcoding it to false for now
+    })
+    res.json({
+        msg: "Todo created successfully",
     })
 })
 
@@ -58,3 +63,5 @@ app.put("/completed", async (req, res) => {
         msg: "Todo marked successfully",
     })
 })
+
+app.listen(3000);

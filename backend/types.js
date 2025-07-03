@@ -3,13 +3,13 @@ const zod = require('zod');
 
 const createTodoSchema = zod.object({
     title: zod.string().min(1, "Title is required"),
-    description: zod.string().optinal(),
+    description: zod.string().optional(),
     completed: zod.boolean().default(false)
 })
 
-const updateTodoSchema = zod.obejct({
+const updateTodoSchema = zod.object({
     // id: zod.string().uuid("Invalid ID format"),
-    id: zod.string();
+    id: zod.string(),
 })
 
 module.exports = {
