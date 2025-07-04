@@ -49,11 +49,11 @@ app.put("/completed", async (req, res) => {
     if(!parsedPayload.success) {
         res.status(411).json({
             error: parsedPayload.error.errors,
-            msg: "You provided wrong inputs",
+            msg: "You provided wrong inputs",   
         })
         return;
     }
-    await todo.updateOne({
+    await todo.update({
         _id: req.body.id,
     }, {
         // completed: req.body.completed,
